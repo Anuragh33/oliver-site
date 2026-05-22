@@ -14,17 +14,21 @@ It never appears in screen recordings or screen shares.
 
 <br />
 
-[![Download DMG](https://img.shields.io/github/v/release/Anuragh33/oliver-site?style=for-the-badge&color=3dd6a0&label=Download+DMG&logo=apple&logoColor=white)](https://github.com/Anuragh33/oliver-site/releases/latest)
+[![Website](https://img.shields.io/badge/Website-oliver--site-3dd6a0?style=for-the-badge&logo=vercel&logoColor=black)](https://oliver-site-psi.vercel.app)
+&nbsp;
+[![Download DMG](https://img.shields.io/github/v/release/Anuragh33/oliver-site?style=for-the-badge&color=ffffff&label=Download+DMG&logo=apple&logoColor=black)](https://github.com/Anuragh33/oliver-site/releases/latest)
 &nbsp;
 [![macOS](https://img.shields.io/badge/macOS_13%2B-required-1c1c1e?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/Anuragh33/oliver-site/releases/latest)
-&nbsp;
-[![Apple Silicon](https://img.shields.io/badge/Apple_Silicon-aarch64-1c1c1e?style=for-the-badge)](https://github.com/Anuragh33/oliver-site/releases/latest)
 &nbsp;
 [![Notarized](https://img.shields.io/badge/Apple-Notarized-1c1c1e?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/Anuragh33/oliver-site/releases/latest)
 
 </div>
 
 <br />
+
+---
+
+**Live site:** [oliver-site-psi.vercel.app](https://oliver-site-psi.vercel.app)
 
 ---
 
@@ -173,13 +177,29 @@ Go to **AI Models → Settings** and install BlackHole 2ch. Once installed, Oliv
 
 ---
 
+---
+
+## Site
+
+**Production:** [oliver-site-psi.vercel.app](https://oliver-site-psi.vercel.app) — deployed via Vercel on every push to `main`.
+
+**Local preview:**
+```bash
+python3 -m http.server 4173
+```
+Open `http://localhost:4173`. No build step — plain HTML and CSS.
+
+---
+
 <div align="center">
 <br />
 <img src="assets/oliver.svg" width="40" height="40" alt="Oliver" />
 <br />
-<sub>Oliver &nbsp;·&nbsp; macOS 13+ &nbsp;·&nbsp; Apple Silicon</sub>
+<sub>Oliver &nbsp;·&nbsp; <a href="https://oliver-site-psi.vercel.app">oliver-site-psi.vercel.app</a> &nbsp;·&nbsp; macOS 13+ &nbsp;·&nbsp; Apple Silicon</sub>
 <br /><br />
 
-[![Download](https://img.shields.io/github/v/release/Anuragh33/oliver-site?style=flat-square&color=3dd6a0&label=latest+release)](https://github.com/Anuragh33/oliver-site/releases/latest)
+[![Website](https://img.shields.io/badge/Website-live-3dd6a0?style=flat-square&logo=vercel&logoColor=black)](https://oliver-site-psi.vercel.app)
+&nbsp;
+[![Download](https://img.shields.io/github/v/release/Anuragh33/oliver-site?style=flat-square&color=ffffff&label=latest+release&logo=apple&logoColor=black)](https://github.com/Anuragh33/oliver-site/releases/latest)
 
 </div>
