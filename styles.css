@@ -1,0 +1,228 @@
+/* Oliver website — design language mirrors src/index.css */
+
+:root {
+  color-scheme: dark;
+  --bg-app: #0a0a0a;
+  --bg-1: #050505;
+  --panel: #101010;
+  --panel-2: #161616;
+  --line: rgba(255, 255, 255, 0.14);
+  --line-soft: rgba(255, 255, 255, 0.08);
+  --text: #f2f6fb;
+  --muted: #9bb0ca;
+  --brand: #3dd6a0;
+  --brand-2: #1f8f6d;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-app);
+  color: var(--text);
+  letter-spacing: 0.01em;
+  font-family: "IBM Plex Sans", "Söhne", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+code, pre, kbd, .mono {
+  font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* Glow background mirroring the app's overlay aesthetic */
+.bg-glow {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(61, 214, 160, 0.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(61, 214, 160, 0.06), transparent 60%);
+}
+
+/* Sections use the same elevated-panel treatment as the app */
+.panel {
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.96), rgba(10, 10, 10, 0.98));
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+}
+
+.panel-soft {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+}
+
+.panel-soft:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Inputs / kbd match the app */
+kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 11px;
+  color: var(--text);
+  font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* Primary CTA — Oliver's signature brand gradient */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.1rem;
+  border-radius: 10px;
+  color: #041218;
+  font-weight: 500;
+  font-size: 14px;
+  background: linear-gradient(120deg, var(--brand), var(--brand-2));
+  box-shadow: 0 10px 20px rgba(61, 214, 160, 0.18);
+  transition: transform 120ms ease, box-shadow 140ms ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(61, 214, 160, 0.26);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.1rem;
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line-soft);
+  transition: background 140ms ease, border-color 140ms ease, transform 120ms ease;
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--line);
+  transform: translateY(-1px);
+}
+
+/* fadeUp matches the app's section entrance */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  animation: fadeUp 320ms ease both;
+}
+
+/* Section observers: animate when scrolled into view */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 480ms ease, transform 480ms ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Pulse dot for the live status pill (mirrors the overlay's listening state) */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(61, 214, 160, 0.50); }
+  50%      { opacity: 0.7; box-shadow: 0 0 0 6px rgba(61, 214, 160, 0); }
+}
+
+.dot-pulse {
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+/* Mock waveform bars used in the hero overlay preview */
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.4); }
+  50%      { transform: scaleY(1); }
+}
+
+.wave-bar {
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  background: linear-gradient(180deg, #C4FFF0, #3DD6A0);
+  border-radius: 999px;
+  transform-origin: center;
+  animation: wave 1s ease-in-out infinite;
+}
+
+.wave-bar:nth-child(2) { animation-delay: 0.1s; height: 18px; }
+.wave-bar:nth-child(3) { animation-delay: 0.2s; height: 12px; }
+.wave-bar:nth-child(4) { animation-delay: 0.3s; height: 22px; }
+.wave-bar:nth-child(5) { animation-delay: 0.4s; height: 10px; }
+
+/* Streaming caret matches the overlay's typing indicator */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.caret {
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  background: var(--brand);
+  margin-left: 2px;
+  vertical-align: -2px;
+  animation: blink 1s steps(1) infinite;
+}
+
+/* Scrollbar styled to match the dashboard */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  border: 2px solid #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+a {
+  transition: color 120ms ease, background-color 120ms ease, border-color 120ms ease, opacity 120ms ease;
+}
+
+/* Brand text gradient helper used in headings */
+.text-brand-gradient {
+  background: linear-gradient(120deg, #C4FFF0, #3DD6A0 45%, #1f8f6d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Subtle inner gridlines used in section dividers */
+.hairline {
+  border-top: 1px solid var(--line-soft);
+}

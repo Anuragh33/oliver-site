@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Oliver — invisible AI overlay for macOS meetings</title>
+    <meta name="description" content="Oliver sits above every window on macOS, listens to your meeting, and streams answers from the model of your choice. Invisible on screen shares. No backend. No telemetry." />
+    <meta property="og:title" content="Oliver" />
+    <meta property="og:description" content="Invisible AI overlay for macOS meetings." />
+    <meta property="og:image" content="/assets/oliver.svg" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="icon" href="/assets/oliver.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              app: "#0a0a0a",
+              panel: "#101010",
+              panel2: "#161616",
+              brand: "#3dd6a0",
+              brand2: "#1f8f6d",
+              muted: "#9bb0ca",
+              text: "#f2f6fb",
+            },
+            fontFamily: {
+              sans: ['"IBM Plex Sans"', '"Söhne"', '"Avenir Next"', '"Segoe UI"', "system-ui", "sans-serif"],
+              mono: ['"IBM Plex Mono"', "ui-monospace", '"SF Mono"', "Menlo", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="bg-app text-text">
+    <!-- Header -->
+    <header class="sticky top-0 z-30 border-b border-white/[0.08] bg-app/80 backdrop-blur-md">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <a href="/" class="flex items-center gap-3">
+          <span class="inline-flex h-10 w-10 items-center justify-center">
+            <!-- Oliver mark (copied from src/components/AppChrome.tsx OliverIcon) -->
+            <svg width="40" height="40" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#64F0C0" />
+                  <stop offset="45%" stop-color="#28B87A" />
+                  <stop offset="100%" stop-color="#0D4530" />
+                </linearGradient>
+                <linearGradient id="bars" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#C4FFF0" />
+                  <stop offset="100%" stop-color="#3DD6A0" />
+                </linearGradient>
+              </defs>
+              <circle cx="14" cy="13.55" r="7.78" stroke="url(#ring)" stroke-width="6.1" />
+              <rect x="9.84" y="11.9" width="1.43" height="3.28" rx="0.72" fill="url(#bars)" opacity="0.88" />
+              <rect x="12.04" y="10.61" width="1.43" height="5.91" rx="0.72" fill="url(#bars)" />
+              <rect x="14.24" y="11.26" width="1.43" height="4.59" rx="0.72" fill="url(#bars)" opacity="0.88" />
+            </svg>
+          </span>
+          <span class="text-[15px] font-medium tracking-tight">Oliver</span>
+        </a>
+        <nav class="hidden items-center gap-7 text-[13px] text-muted md:flex">
+          <a class="hover:text-text" href="#features">Features</a>
+          <a class="hover:text-text" href="#providers">Providers</a>
+          <a class="hover:text-text" href="#privacy">Privacy</a>
+          <a class="hover:text-text" href="#install">Install</a>
+          <a class="rounded-md border border-white/[0.10] bg-white/[0.04] px-3 py-1.5 text-text hover:border-white/[0.16] hover:bg-white/[0.07]" href="https://github.com/Anuragh33/oliver-site/releases">Releases</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-glow pointer-events-none"></div>
+        <div class="relative mx-auto max-w-6xl px-6 pb-24 pt-20 md:pt-28">
+          <div class="fade-up">
+            <!-- Live status pill: same emerald the overlay flashes when listening -->
+            <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/[0.10] bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-wider text-muted">
+              <span class="dot-pulse h-1.5 w-1.5 rounded-full bg-brand"></span>
+              <span>macOS · Apple Silicon · v0.1.0</span>
+            </div>
+
+            <h1 class="max-w-3xl text-[44px] font-medium leading-[1.05] tracking-tight md:text-[60px]">
+              An invisible AI overlay <br class="hidden md:block" />
+              <span class="text-brand-gradient">for your meetings.</span>
+            </h1>
+
+            <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+              Oliver sits above every window, listens to what's happening, and streams answers in real time.
+              It doesn't appear in screen recordings or shared screens. No backend relay. No telemetry.
+              Every request goes straight from your machine to the provider you choose.
+            </p>
+
+            <div class="mt-8 flex flex-wrap items-center gap-3">
+              <a class="btn-primary" href="https://github.com/Anuragh33/oliver-site/releases/latest">
+                Download for macOS
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+              </a>
+              <span class="text-[12px] text-muted">macOS 13+ · Apple Silicon</span>
+            </div>
+          </div>
+
+          <!-- Overlay mock — matches the in-app input pill + response card stack -->
+          <div class="mt-16 fade-up" style="animation-delay: 80ms">
+            <!-- Input pill -->
+            <div class="panel mx-auto flex max-w-[720px] items-center gap-3 px-4 py-3">
+              <span class="flex h-4 w-4 items-end justify-between" aria-hidden="true">
+                <span class="wave-bar"></span>
+                <span class="wave-bar"></span>
+                <span class="wave-bar"></span>
+                <span class="wave-bar"></span>
+                <span class="wave-bar"></span>
+              </span>
+              <div class="flex-1 text-[13px] text-text/90">What did they say the timeline was?</div>
+              <span class="text-[11px] text-muted mono">⌘ ⇧ Space</span>
+            </div>
+
+            <!-- Response card -->
+            <div class="panel mx-auto mt-3 max-w-[720px] overflow-hidden">
+              <div class="flex items-center justify-between border-b border-white/[0.06] px-5 py-2.5 text-[11px] text-muted">
+                <div class="flex items-center gap-2">
+                  <span class="h-1.5 w-1.5 rounded-full bg-brand dot-pulse"></span>
+                  <span>streaming · claude-opus-4-7</span>
+                </div>
+                <span class="mono">1,284 in · 312 out</span>
+              </div>
+              <div class="px-5 py-4 text-[14px] leading-relaxed text-text/90">
+                They committed to a v1 by end of Q3, pending the
+                <span class="text-text">security review</span> from legal. Mark mentioned the audit-trail
+                work is the gating dependency<span class="caret"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Oliver -->
+      <section class="border-t border-white/[0.06]">
+        <div class="mx-auto max-w-6xl px-6 py-20">
+          <div class="reveal grid grid-cols-1 gap-px overflow-hidden rounded-[14px] border border-white/[0.14] bg-white/[0.05] md:grid-cols-3">
+            <div class="bg-app p-7">
+              <div class="text-[11px] uppercase tracking-[0.16em] text-brand">Invisible</div>
+              <h3 class="mt-3 text-[17px] font-medium text-text">Excluded from screen capture at the OS level.</h3>
+              <p class="mt-2 text-[14px] leading-relaxed text-muted">
+                The overlay window sets <code class="rounded bg-white/[0.05] px-1.5 py-0.5 text-[11px]">NSWindowSharingNone</code>.
+                Zoom, Teams, Meet, and recorders see a clean desktop.
+              </p>
+            </div>
+            <div class="bg-app p-7">
+              <div class="text-[11px] uppercase tracking-[0.16em] text-brand">Direct</div>
+              <h3 class="mt-3 text-[17px] font-medium text-text">Every request goes straight to the provider.</h3>
+              <p class="mt-2 text-[14px] leading-relaxed text-muted">
+                No proxy, no relay. Your API key, your endpoint. Oliver-the-company can't see your traffic
+                because Oliver-the-company doesn't have servers.
+              </p>
+            </div>
+            <div class="bg-app p-7">
+              <div class="text-[11px] uppercase tracking-[0.16em] text-brand">Local</div>
+              <h3 class="mt-3 text-[17px] font-medium text-text">Conversations stay on your machine.</h3>
+              <p class="mt-2 text-[14px] leading-relaxed text-muted">
+                SQLite in your app data folder. API keys encrypted with AES-GCM-SIV. No analytics, no
+                telemetry, no upload of any kind.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section id="features" class="border-t border-white/[0.06]">
+        <div class="mx-auto max-w-6xl px-6 py-24">
+          <div class="reveal max-w-2xl">
+            <div class="text-[11px] uppercase tracking-[0.16em] text-brand">What it does</div>
+            <h2 class="mt-3 text-[34px] font-medium tracking-tight">Built for the way meetings actually feel.</h2>
+            <p class="mt-4 text-muted">
+              Live transcription, streaming answers, and visual context, all from a 720-pixel input pill
+              that hovers above your other windows.
+            </p>
+          </div>
+
+          <div class="reveal mt-14 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div class="panel-soft p-6">
+              <div class="flex items-center gap-2">
+                <span class="text-brand text-base">◑</span>
+                <div class="text-[14px] font-medium">Live transcription</div>
+              </div>
+              <p class="mt-2 text-[13.5px] leading-relaxed text-muted">
+                3-second mic and system-audio chunks, Whisper locally or via the OpenAI API. Auto-debounces
+                and re-queues while the model is streaming.
+              </p>
+            </div>
+
+            <div class="panel-soft p-6">
+              <div class="flex items-center gap-2">
+                <span class="text-brand text-base">◈</span>
+                <div class="text-[14px] font-medium">Streaming chat</div>
+              </div>
+              <p class="mt-2 text-[13.5px] leading-relaxed text-muted">
+                Six provider adapters, all streaming token-by-token with real usage counts where the
+                provider reports them.
+              </p>
+            </div>
+
+            <div class="panel-soft p-6">
+              <div class="flex items-center gap-2">
+                <span class="text-brand text-base">⊞</span>
+                <div class="text-[14px] font-medium">Screenshot context</div>
+              </div>
+              <p class="mt-2 text-[13.5px] leading-relaxed text-muted">
+                One hotkey attaches the current screen to your prompt. Vision-capable models see what you
+                see; the rest get a graceful skip.
+              </p>
+            </div>
+
+            <div class="panel-soft p-6">
+              <div class="flex items-center gap-2">
+                <span class="text-brand text-base">▤</span>
+                <div class="text-[14px] font-medium">File attachments</div>
+              </div>
+              <p class="mt-2 text-[13.5px] leading-relaxed text-muted">
+                Drop a file in to prime the conversation. Oliver reads up to 8,000 characters of context
+                and stores it per conversation in local SQLite.
+              </p>
+            </div>
+
+            <div class="panel-soft p-6">
+              <div class="flex items-center gap-2">
+                <span class="text-brand text-base">◯</span>
+                <div class="text-[14px] font-medium">Local history</div>
+              </div>
+              <p class="mt-2 text-[13.5px] leading-relaxed text-muted">
+                Conversations, transcripts, attachments, and usage stats stay in your app data folder.
+                Search, replay, export when you want to.
+              </p>
+            </div>
+
+            <div class="panel-soft p-6">
+              <div class="flex items-center gap-2">
+                <span class="text-brand text-base">≡</span>
+                <div class="text-[14px] font-medium">Prompt modes</div>
+              </div>
+              <p class="mt-2 text-[13.5px] leading-relaxed text-muted">
+                Save reusable prompt templates from the dashboard. Bring them up by name from inside the
+                overlay without breaking flow.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Providers -->
+      <section id="providers" class="border-t border-white/[0.06]">
+        <div class="mx-auto max-w-6xl px-6 py-24">
+          <div class="reveal max-w-2xl">
+            <div class="text-[11px] uppercase tracking-[0.16em] text-brand">Providers</div>
+            <h2 class="mt-3 text-[34px] font-medium tracking-tight">Six providers. Your keys. Your choice.</h2>
+            <p class="mt-4 text-muted">
+              Configure endpoints and models per provider from the dashboard. Ollama auto-discovers your
+              local models. Switch providers mid-conversation without losing history.
+            </p>
+          </div>
+
+          <div class="reveal mt-12 panel overflow-hidden">
+            <div class="grid grid-cols-3 gap-px bg-white/[0.06] md:grid-cols-6">
+              <div class="flex h-24 items-center justify-center bg-app px-4"><img src="/assets/providers/openai.svg" alt="OpenAI" class="h-7 max-w-full opacity-90" /></div>
+              <div class="flex h-24 items-center justify-center bg-app px-4"><img src="/assets/providers/anthropic.svg" alt="Anthropic Claude" class="h-7 max-w-full opacity-90" /></div>
+              <div class="flex h-24 items-center justify-center bg-app px-4"><img src="/assets/providers/gemini.svg" alt="Google Gemini" class="h-7 max-w-full opacity-90" /></div>
+              <div class="flex h-24 items-center justify-center bg-app px-4"><img src="/assets/providers/groq.svg" alt="Groq" class="h-7 max-w-full opacity-90" /></div>
+              <div class="flex h-24 items-center justify-center bg-app px-4"><img src="/assets/providers/openrouter.svg" alt="OpenRouter" class="h-7 max-w-full opacity-90" /></div>
+              <div class="flex h-24 items-center justify-center bg-app px-4"><img src="/assets/providers/ollama.svg" alt="Ollama" class="h-7 max-w-full opacity-90" /></div>
+            </div>
+
+            <div class="hairline"></div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-[14px]">
+                <thead class="text-left text-[11px] uppercase tracking-[0.16em] text-muted">
+                  <tr class="border-b border-white/[0.06]">
+                    <th class="px-5 py-3 font-medium">Provider</th>
+                    <th class="px-5 py-3 font-medium">Streaming</th>
+                    <th class="px-5 py-3 font-medium">Vision</th>
+                    <th class="px-5 py-3 font-medium">Local</th>
+                  </tr>
+                </thead>
+                <tbody class="text-text/90">
+                  <tr class="border-b border-white/[0.04]"><td class="px-5 py-3.5">OpenAI</td><td class="px-5 py-3.5 text-brand">Yes</td><td class="px-5 py-3.5 text-brand">Yes</td><td class="px-5 py-3.5 text-muted">—</td></tr>
+                  <tr class="border-b border-white/[0.04]"><td class="px-5 py-3.5">Anthropic Claude</td><td class="px-5 py-3.5 text-brand">Yes</td><td class="px-5 py-3.5 text-brand">Yes</td><td class="px-5 py-3.5 text-muted">—</td></tr>
+                  <tr class="border-b border-white/[0.04]"><td class="px-5 py-3.5">Google Gemini</td><td class="px-5 py-3.5 text-brand">Yes</td><td class="px-5 py-3.5 text-brand">Yes</td><td class="px-5 py-3.5 text-muted">—</td></tr>
+                  <tr class="border-b border-white/[0.04]"><td class="px-5 py-3.5">Groq</td><td class="px-5 py-3.5 text-brand">Yes</td><td class="px-5 py-3.5 text-muted">—</td><td class="px-5 py-3.5 text-muted">—</td></tr>
+                  <tr class="border-b border-white/[0.04]"><td class="px-5 py-3.5">OpenRouter</td><td class="px-5 py-3.5 text-brand">Yes</td><td class="px-5 py-3.5 text-brand">Yes</td><td class="px-5 py-3.5 text-muted">—</td></tr>
+                  <tr><td class="px-5 py-3.5">Ollama</td><td class="px-5 py-3.5 text-brand">Yes</td><td class="px-5 py-3.5 text-muted">Model</td><td class="px-5 py-3.5 text-brand">Yes</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hotkeys -->
+      <section class="border-t border-white/[0.06]">
+        <div class="mx-auto max-w-6xl px-6 py-24">
+          <div class="reveal grid grid-cols-1 gap-12 md:grid-cols-12">
+            <div class="md:col-span-5">
+              <div class="text-[11px] uppercase tracking-[0.16em] text-brand">Hotkeys</div>
+              <h2 class="mt-3 text-[34px] font-medium tracking-tight">Everything from the keyboard.</h2>
+              <p class="mt-4 text-muted">
+                Four global shortcuts cover the entire flow. Remap any of them from the dashboard.
+                Conflict detection runs before you save.
+              </p>
+            </div>
+            <div class="md:col-span-7">
+              <div class="panel">
+                <div class="divide-y divide-white/[0.05]">
+                  <div class="flex items-center justify-between px-5 py-4">
+                    <div class="text-[14px]">Toggle overlay</div>
+                    <div class="flex items-center gap-1.5"><kbd>⌘</kbd><kbd>⇧</kbd><kbd>Space</kbd></div>
+                  </div>
+                  <div class="flex items-center justify-between px-5 py-4">
+                    <div class="text-[14px]">Capture screenshot</div>
+                    <div class="flex items-center gap-1.5"><kbd>⌘</kbd><kbd>⇧</kbd><kbd>S</kbd></div>
+                  </div>
+                  <div class="flex items-center justify-between px-5 py-4">
+                    <div class="text-[14px]">Start / stop voice input</div>
+                    <div class="flex items-center gap-1.5"><kbd>⌘</kbd><kbd>⇧</kbd><kbd>V</kbd></div>
+                  </div>
+                  <div class="flex items-center justify-between px-5 py-4">
+                    <div class="text-[14px]">Open dashboard</div>
+                    <div class="flex items-center gap-1.5"><kbd>⌘</kbd><kbd>⇧</kbd><kbd>D</kbd></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Privacy -->
+      <section id="privacy" class="border-t border-white/[0.06]">
+        <div class="mx-auto max-w-6xl px-6 py-24">
+          <div class="reveal max-w-2xl">
+            <div class="text-[11px] uppercase tracking-[0.16em] text-brand">Privacy</div>
+            <h2 class="mt-3 text-[34px] font-medium tracking-tight">A private assistant should actually be private.</h2>
+            <p class="mt-4 text-muted">
+              Oliver is built to be impossible to observe from the outside, including by us. There's no
+              server to opt out of, because there's no server.
+            </p>
+          </div>
+
+          <ul class="reveal mt-12 grid grid-cols-1 gap-4 md:grid-cols-2">
+            <li class="panel-soft p-6">
+              <div class="text-[14px] font-medium">No telemetry</div>
+              <p class="mt-1.5 text-[13.5px] leading-relaxed text-muted">
+                Zero analytics calls. No crash reporters. No "anonymous usage" tracking. Verify it
+                yourself in <code class="rounded bg-white/[0.05] px-1.5 py-0.5 text-[11px]">Little Snitch</code>.
+              </p>
+            </li>
+            <li class="panel-soft p-6">
+              <div class="text-[14px] font-medium">No relay server</div>
+              <p class="mt-1.5 text-[13.5px] leading-relaxed text-muted">
+                Every model request originates from your machine and terminates at the provider endpoint
+                you configured. Nothing in between.
+              </p>
+            </li>
+            <li class="panel-soft p-6">
+              <div class="text-[14px] font-medium">Encrypted at rest</div>
+              <p class="mt-1.5 text-[13.5px] leading-relaxed text-muted">
+                API keys are encrypted with AES-GCM-SIV before being written to SQLite. The key is
+                derived per install and stored outside the database.
+              </p>
+            </li>
+            <li class="panel-soft p-6">
+              <div class="text-[14px] font-medium">Screen-share safe</div>
+              <p class="mt-1.5 text-[13.5px] leading-relaxed text-muted">
+                Window sharing is disabled at the AppKit layer. The overlay does not appear in Zoom,
+                Teams, Google Meet, or any screen recorder we have tested.
+              </p>
+            </li>
+            <li class="panel-soft p-6">
+              <div class="text-[14px] font-medium">Local persistence</div>
+              <p class="mt-1.5 text-[13.5px] leading-relaxed text-muted">
+                Conversations, transcripts, prompts, and attachments live in your app data folder.
+                Delete the folder, delete everything.
+              </p>
+            </li>
+            <li class="panel-soft p-6">
+              <div class="text-[14px] font-medium">Signed and notarized</div>
+              <p class="mt-1.5 text-[13.5px] leading-relaxed text-muted">
+                Every release is signed with a Developer ID Application certificate and notarized by Apple.
+                macOS Gatekeeper verifies the binary before it runs.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Install -->
+      <section id="install" class="border-t border-white/[0.06]">
+        <div class="mx-auto max-w-6xl px-6 py-24">
+          <div class="reveal grid grid-cols-1 gap-12 md:grid-cols-12">
+            <div class="md:col-span-5">
+              <div class="text-[11px] uppercase tracking-[0.16em] text-brand">Install</div>
+              <h2 class="mt-3 text-[34px] font-medium tracking-tight">Two minutes from download to first answer.</h2>
+              <p class="mt-4 text-muted">
+                Drop it in Applications, grant microphone and screen recording permissions, paste an API
+                key. That's it.
+              </p>
+            </div>
+            <div class="md:col-span-7 space-y-3">
+              <div class="panel-soft p-5">
+                <div class="flex items-baseline gap-3">
+                  <span class="mono text-[11px] text-brand">01</span>
+                  <div class="text-[14px] font-medium">Download</div>
+                </div>
+                <p class="mt-1.5 ml-8 text-[13.5px] text-muted">
+                  Grab <span class="mono text-[12px] text-text">Oliver.dmg</span> from the latest GitHub release.
+                  Open it and drag Oliver into Applications.
+                </p>
+              </div>
+              <div class="panel-soft p-5">
+                <div class="flex items-baseline gap-3">
+                  <span class="mono text-[11px] text-brand">02</span>
+                  <div class="text-[14px] font-medium">Grant permissions</div>
+                </div>
+                <p class="mt-1.5 ml-8 text-[13.5px] text-muted">
+                  macOS will prompt for microphone and screen recording access on first launch. Both are
+                  required for live transcription and screenshot context.
+                </p>
+              </div>
+              <div class="panel-soft p-5">
+                <div class="flex items-baseline gap-3">
+                  <span class="mono text-[11px] text-brand">03</span>
+                  <div class="text-[14px] font-medium">Connect a provider</div>
+                </div>
+                <p class="mt-1.5 ml-8 text-[13.5px] text-muted">
+                  Open the dashboard, head to AI Models, paste an API key from any supported provider.
+                  Keys are encrypted before they hit disk.
+                </p>
+              </div>
+              <div class="panel-soft p-5">
+                <div class="flex items-baseline gap-3">
+                  <span class="mono text-[11px] text-brand">04</span>
+                  <div class="text-[14px] font-medium">System audio (optional)</div>
+                </div>
+                <p class="mt-1.5 ml-8 text-[13.5px] text-muted">
+                  Install BlackHole 2ch from inside the dashboard to capture the other side of your call.
+                  Routing is auto-detected once it's installed.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal mt-12 flex flex-wrap items-center gap-3">
+            <a class="btn-primary" href="https://github.com/Anuragh33/oliver-site/releases/latest">Download for macOS</a>
+            <span class="text-[12px] text-muted">macOS 13+ · Apple Silicon</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-white/[0.06]">
+      <div class="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-10 text-[13px] text-muted md:flex-row md:items-center md:justify-between">
+        <div class="flex items-center gap-2.5">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true" class="opacity-80">
+            <defs>
+              <linearGradient id="ringFoot" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#64F0C0" /><stop offset="45%" stop-color="#28B87A" /><stop offset="100%" stop-color="#0D4530" />
+              </linearGradient>
+              <linearGradient id="barsFoot" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#C4FFF0" /><stop offset="100%" stop-color="#3DD6A0" />
+              </linearGradient>
+            </defs>
+            <circle cx="14" cy="13.55" r="7.78" stroke="url(#ringFoot)" stroke-width="6.1" />
+            <rect x="9.84" y="11.9" width="1.43" height="3.28" rx="0.72" fill="url(#barsFoot)" opacity="0.88" />
+            <rect x="12.04" y="10.61" width="1.43" height="5.91" rx="0.72" fill="url(#barsFoot)" />
+            <rect x="14.24" y="11.26" width="1.43" height="4.59" rx="0.72" fill="url(#barsFoot)" opacity="0.88" />
+          </svg>
+          <span>Oliver</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a class="hover:text-text" href="https://github.com/Anuragh33/oliver-site/releases">Releases</a>
+          <a class="hover:text-text" href="https://github.com/Anuragh33/oliver-site/releases">Changelog</a>
+          <a class="hover:text-text" href="https://github.com/Anuragh33/oliver-site/issues">Issues</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Reveal-on-scroll mirrors the app's fadeUp section entrance
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { rootMargin: "0px 0px -10% 0px", threshold: 0.05 }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
