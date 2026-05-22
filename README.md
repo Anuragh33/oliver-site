@@ -20,7 +20,7 @@ It never appears in screen recordings or screen shares.
 &nbsp;
 [![macOS](https://img.shields.io/badge/macOS_13%2B-required-1c1c1e?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/Anuragh33/oliver-site/releases/latest)
 &nbsp;
-[![Notarized](https://img.shields.io/badge/Apple-Notarized-1c1c1e?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/Anuragh33/oliver-site/releases/latest)
+[![Apple Silicon](https://img.shields.io/badge/Apple_Silicon-aarch64-1c1c1e?style=for-the-badge)](https://github.com/Anuragh33/oliver-site/releases/latest)
 
 </div>
 
@@ -141,7 +141,7 @@ Oliver is built to be impossible to observe from the outside — including by us
 | **Screen-share safe** | Window sharing is disabled at the AppKit layer. The overlay does not appear in Zoom, Teams, Google Meet, or any screen recorder tested. |
 | **Local persistence** | Conversations, transcripts, and attachments live in your app data folder. Delete the folder, delete everything. |
 | **Encrypted at rest** | API keys are encrypted with AES-GCM-SIV before being written to SQLite. The encryption key is stored outside the database. |
-| **Signed and notarized** | Every release is signed with a Developer ID Application certificate and notarized by Apple. macOS Gatekeeper verifies the binary before it runs. |
+| **No hidden processes** | Oliver runs no background daemons, launch agents, or auto-updaters. Quit it and it's gone. Verify with Activity Monitor or Little Snitch. |
 
 ---
 
@@ -150,6 +150,8 @@ Oliver is built to be impossible to observe from the outside — including by us
 **1 — Download**
 
 Grab the latest `Oliver_x.x.x_aarch64.dmg` from [**Releases**](https://github.com/Anuragh33/oliver-site/releases/latest). Open the DMG and drag Oliver into Applications.
+
+> **First launch:** macOS may show a security warning. Right-click (or Control-click) Oliver in Applications and choose **Open** to bypass it. You only need to do this once.
 
 **2 — Grant permissions**
 
