@@ -149,9 +149,18 @@ Oliver is built to be impossible to observe from the outside — including by us
 
 **1 — Download**
 
-Grab the latest `Oliver_x.x.x_aarch64.dmg` from [**Releases**](https://github.com/Anuragh33/oliver-site/releases/latest). Open the DMG and drag Oliver into Applications.
+Grab the latest `Oliver_0.1.1_aarch64.dmg` from [**Releases**](https://github.com/Anuragh33/oliver-site/releases/latest). Open the DMG and drag Oliver into Applications.
 
-> **First launch:** macOS may show a security warning. Right-click (or Control-click) Oliver in Applications and choose **Open** to bypass it. You only need to do this once.
+> **First launch:** the build is unsigned, so Gatekeeper will block it.
+>
+> - macOS 13–14: right-click (or Control-click) Oliver in Applications and choose **Open**.
+> - macOS 15+ (Sequoia): right-click → Open no longer works. Clear the quarantine flag once in Terminal:
+>
+>   ```bash
+>   xattr -dr com.apple.quarantine /Applications/Oliver.app
+>   ```
+>
+> You only need to do this once.
 
 **2 — Grant permissions**
 

@@ -83,7 +83,7 @@
             <!-- Live status pill: same emerald the overlay flashes when listening -->
             <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/[0.10] bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-wider text-muted">
               <span class="dot-pulse h-1.5 w-1.5 rounded-full bg-brand"></span>
-              <span>macOS · Apple Silicon · v0.1.0</span>
+              <span>macOS · Apple Silicon · v0.1.1</span>
             </div>
 
             <h1 class="max-w-3xl text-[44px] font-medium leading-[1.05] tracking-tight md:text-[60px]">
@@ -418,11 +418,17 @@
                   <div class="text-[14px] font-medium">Download</div>
                 </div>
                 <p class="mt-1.5 ml-8 text-[13.5px] text-muted">
-                  Grab <span class="mono text-[12px] text-text">Oliver.dmg</span> from the latest release.
-                  Open it and drag Oliver into Applications. On first launch, right-click Oliver and choose
-                  <span class="mono text-[12px] text-text">Open</span> — macOS requires this once for apps
-                  outside the App Store.
+                  Grab <span class="mono text-[12px] text-text">Oliver_0.1.1_aarch64.dmg</span> from the latest release.
+                  Open it and drag Oliver into Applications. The build is unsigned, so Gatekeeper will block the
+                  first launch.
                 </p>
+                <p class="mt-2 ml-8 text-[13.5px] text-muted">
+                  On <span class="text-text">macOS 13–14</span>, right-click Oliver and choose
+                  <span class="mono text-[12px] text-text">Open</span>.
+                  On <span class="text-text">macOS 15+ (Sequoia)</span>, right-click → Open no longer works;
+                  clear the quarantine flag once in Terminal:
+                </p>
+                <pre class="mt-2 ml-8 overflow-x-auto rounded bg-white/[0.04] px-3 py-2 mono text-[12px] text-text/90">xattr -dr com.apple.quarantine /Applications/Oliver.app</pre>
               </div>
               <div class="panel-soft p-5">
                 <div class="flex items-baseline gap-3">
