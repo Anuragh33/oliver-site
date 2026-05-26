@@ -97,10 +97,13 @@ Configure endpoints and models per provider from the dashboard. Ollama auto-disc
 ## Features
 
 ### Live transcription
-Mic and system audio are captured in 3-second chunks and sent to Whisper — running locally on your machine or via the OpenAI Whisper API. Transcription auto-debounces and re-queues if the model is already streaming, so nothing is dropped.
+Mic is captured through CoreAudio, system audio through ScreenCaptureKit — no extra drivers required. 3-second chunks are sent to Whisper (local or OpenAI Whisper API). Transcription auto-debounces and re-queues if the model is already streaming, so nothing is dropped.
 
 ### Streaming answers
 All six provider adapters stream token-by-token with real usage counts where the provider reports them. Every answer in a session is kept in a scrollable thread — scroll back to re-read an earlier response without losing what's currently streaming.
+
+### Prompt modes
+Three built-in system prompts cover the most common cases: **General** for any meeting, **Interview** for job interviews (first-person, STAR-form behaviorals, structured technicals), and **Work Meeting** (direct, position-first, single trade-off). Write your own modes for sales calls, support escalations, pitch reviews, anything — the active mode shapes every answer.
 
 ### Screenshot context
 One hotkey (`⌘ ⇧ S`) attaches your current screen to the next prompt. Vision-capable models see exactly what you see. Non-vision models receive a graceful skip.
@@ -108,8 +111,17 @@ One hotkey (`⌘ ⇧ S`) attaches your current screen to the next prompt. Vision
 ### File attachments
 Drop a file into the dashboard to prime the conversation with up to 8,000 characters of context. Stored per conversation in local SQLite so it persists across restarts.
 
-### System audio capture
-Install BlackHole 2ch from inside the dashboard. Once installed, Oliver captures both your microphone and the other side of the call — the full room, not just your voice.
+### Keyboard-first, no focus steal
+With Accessibility permission granted, Oliver intercepts keystrokes for its own input field without taking focus from Zoom, Meet, or whatever's active. Type while the meeting keeps going.
+
+### Conversation history & usage stats
+Every meeting is saved locally with its transcript, prompts, attachments, and answers. A dedicated usage stats panel shows total sessions, estimated tokens, per-day activity, and recent input/output token counts.
+
+### System audio
+Captured through ScreenCaptureKit by default. BlackHole 2ch is installable from the dashboard as an optional fallback if you'd rather route through a virtual audio device.
+
+### Start-meeting preflight
+Before each session, Oliver runs a checklist: provider key, STT, microphone (with a live 3-second test), Accessibility permission, and optional BlackHole. If anything's missing or broken, you find out before joining the call, not during.
 
 ### Encrypted key storage
 API keys are encrypted with AES-GCM-SIV before being written to SQLite. The encryption key is derived per install and stored outside the database.
@@ -174,9 +186,9 @@ Open the dashboard (`⌘ ⇧ D`), go to **AI Models**, and paste an API key for 
 
 Click **Start Meeting** in the dashboard. Oliver hides itself and begins listening. Press `⌘ L` after you hear something you want answered. The response streams into the panel above the bar.
 
-**5 — System audio (optional)**
+**5 — System audio (built-in)**
 
-Go to **AI Models → Settings** and install BlackHole 2ch. Once installed, Oliver captures both your mic and the other side of the call automatically.
+The other side of the call is captured through ScreenCaptureKit automatically once you grant the Screen Recording permission — no driver install required. If you'd rather route through a virtual audio device, the Start Meeting checklist offers a one-click BlackHole 2ch installer as a fallback.
 
 ---
 
