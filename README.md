@@ -208,12 +208,28 @@ The latest release notes are on the [Releases page](https://github.com/Anuragh33
 
 ## Site
 
-**Production:** [oliver-site-psi.vercel.app](https://oliver-site-psi.vercel.app) — deployed via Vercel on every push to `main`.
+**Production:** [oliver-site-psi.vercel.app](https://oliver-site-psi.vercel.app), hosted on Vercel.
+
+> Git auto-deploy is not currently connected on the Vercel side, so pushes to `main` don't redeploy automatically. To enable it (one-time setup), run:
+>
+> ```bash
+> ./scripts/connect-vercel.sh
+> ```
+>
+> Or in the Vercel dashboard: **`oliver-site` → Settings → Git → Connect Git Repository → Anuragh33/oliver-site**. After that, every push to `main` triggers a production deploy and every PR gets a preview URL.
+
+**Manual deploy** (until Git is connected, or for ad-hoc pushes):
+
+```bash
+vercel --prod
+```
 
 **Local preview:**
+
 ```bash
 python3 -m http.server 4173
 ```
+
 Open `http://localhost:4173`. No build step — plain HTML and CSS.
 
 ---
