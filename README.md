@@ -180,6 +180,18 @@ Go to **AI Models → Settings** and install BlackHole 2ch. Once installed, Oliv
 
 ---
 
+## Uninstall
+
+Drag `Oliver.app` from Applications to the Trash, then remove the local data folder:
+
+```bash
+rm -rf ~/Library/Application\ Support/com.anuraghragidimilli.oliver
+```
+
+That's everything. No daemons, no launch agents, no auto-updaters.
+
+---
+
 ## Requirements
 
 - macOS 13 Ventura or later
@@ -187,6 +199,10 @@ Go to **AI Models → Settings** and install BlackHole 2ch. Once installed, Oliv
 - An API key from at least one supported provider, or Ollama running locally
 
 ---
+
+## What's new
+
+The latest release notes are on the [Releases page](https://github.com/Anuragh33/oliver-site/releases/latest). The website's [Changelog section](https://oliver-site-psi.vercel.app/#changelog) renders them inline, fetched live from GitHub.
 
 ---
 

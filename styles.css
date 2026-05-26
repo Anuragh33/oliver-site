@@ -226,3 +226,27 @@ a {
 .hairline {
   border-top: 1px solid var(--line-soft);
 }
+
+/* Respect the user's motion preference: collapse all animation and scroll
+   smoothing, and pin reveal/fade elements to their final state. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .fade-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .btn-primary:hover,
+  .btn-ghost:hover {
+    transform: none;
+  }
+}

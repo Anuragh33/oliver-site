@@ -1,0 +1,51 @@
+name: Sync version on Oliver release
+
+# Triggered by a repository_dispatch from the Oliver repo's release workflow
+# after a new DMG has been cross-posted to oliver-site. Rewrites the pinned
+# DMG filename in README.md (and any future hardcoded version refs in
+# index.html) to match the latest oliver-site release tag, then commits.
+
+on:
+  repository_dispatch:
+    types: [oliver-released]
+  workflow_dispatch:
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve latest oliver-site release tag
+        id: latest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag=$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName -q .tagName)
+          version="${tag#v}"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Latest tag: $tag (version $version)"
+
+      - name: Rewrite version references
+        run: |
+          version="${{ steps.latest.outputs.version }}"
+          # Pinned DMG filename in README.md: Oliver_<X.Y.Z>_aarch64.dmg
+          perl -i -pe 's|Oliver_[0-9]+\.[0-9]+\.[0-9]+_aarch64\.dmg|Oliver_'"$version"'_aarch64.dmg|g' README.md
+          # If a v<X.Y.Z> string ever gets pinned into index.html again, this
+          # catches it. (Today the pill is JS-fetched, so this is a no-op.)
+          perl -i -pe 's|>v[0-9]+\.[0-9]+\.[0-9]+<|>v'"$version"'<|g' index.html
+
+      - name: Commit if anything changed
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add README.md index.html
+            git commit -m "chore: sync version refs to ${{ steps.latest.outputs.tag }}"
+            git push
+          else
+            echo "No version references changed."
+          fi

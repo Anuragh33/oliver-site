@@ -5,11 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Oliver — invisible AI overlay for macOS meetings</title>
     <meta name="description" content="Oliver sits above every window on macOS, listens to your meeting, and streams answers from the model of your choice. Invisible on screen shares. No backend. No telemetry." />
-    <meta property="og:title" content="Oliver" />
-    <meta property="og:description" content="Invisible AI overlay for macOS meetings." />
-    <meta property="og:image" content="/assets/oliver.svg" />
+    <link rel="canonical" href="https://oliver-site-psi.vercel.app/" />
     <meta name="theme-color" content="#0a0a0a" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://oliver-site-psi.vercel.app/" />
+    <meta property="og:title" content="Oliver — invisible AI overlay for macOS meetings" />
+    <meta property="og:description" content="Sits above every window on macOS, listens to your meeting, and streams answers from the model of your choice. Invisible on screen shares. No backend. No telemetry." />
+    <meta property="og:image" content="https://oliver-site-psi.vercel.app/assets/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Oliver — invisible AI overlay for macOS meetings" />
+    <meta name="twitter:description" content="Sits above every window on macOS, listens in real time, streams answers from the model you choose." />
+    <meta name="twitter:image" content="https://oliver-site-psi.vercel.app/assets/og-image.png" />
+
     <link rel="icon" href="/assets/oliver.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -69,6 +84,8 @@
           <a class="hover:text-text" href="#providers">Providers</a>
           <a class="hover:text-text" href="#privacy">Privacy</a>
           <a class="hover:text-text" href="#install">Install</a>
+          <a class="hover:text-text" href="#faq">FAQ</a>
+          <a class="hover:text-text" href="#changelog">Changelog</a>
           <a class="rounded-md border border-white/[0.10] bg-white/[0.04] px-3 py-1.5 text-text hover:border-white/[0.16] hover:bg-white/[0.07]" href="https://github.com/Anuragh33/oliver-site/releases">Releases</a>
         </nav>
       </div>
@@ -83,7 +100,7 @@
             <!-- Live status pill: same emerald the overlay flashes when listening -->
             <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/[0.10] bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-wider text-muted">
               <span class="dot-pulse h-1.5 w-1.5 rounded-full bg-brand"></span>
-              <span>macOS · Apple Silicon · v0.1.1</span>
+              <span>macOS · Apple Silicon · <span data-version>latest</span></span>
             </div>
 
             <h1 class="max-w-3xl text-[44px] font-medium leading-[1.05] tracking-tight md:text-[60px]">
@@ -118,7 +135,7 @@
                 <span class="wave-bar"></span>
               </span>
               <div class="flex-1 text-[13px] text-text/90">What did they say the timeline was?</div>
-              <span class="text-[11px] text-muted mono">⌘ ⇧ Space</span>
+              <span class="text-[11px] text-muted mono">⌘ L</span>
             </div>
 
             <!-- Response card -->
@@ -310,7 +327,7 @@
               <div class="text-[11px] uppercase tracking-[0.16em] text-brand">Hotkeys</div>
               <h2 class="mt-3 text-[34px] font-medium tracking-tight">Everything from the keyboard.</h2>
               <p class="mt-4 text-muted">
-                Four global shortcuts cover the entire flow. Remap any of them from the dashboard.
+                Five global shortcuts cover the entire flow. Remap any of them from the dashboard.
                 Conflict detection runs before you save.
               </p>
             </div>
@@ -320,6 +337,13 @@
                   <div class="flex items-center justify-between px-5 py-4">
                     <div class="text-[14px]">Toggle overlay</div>
                     <div class="flex items-center gap-1.5"><kbd>⌘</kbd><kbd>⇧</kbd><kbd>Space</kbd></div>
+                  </div>
+                  <div class="flex items-center justify-between px-5 py-4">
+                    <div>
+                      <div class="text-[14px]">Trigger AI answer</div>
+                      <div class="mt-0.5 text-[11.5px] text-muted">Sends what was just heard to your provider.</div>
+                    </div>
+                    <div class="flex items-center gap-1.5"><kbd>⌘</kbd><kbd>L</kbd></div>
                   </div>
                   <div class="flex items-center justify-between px-5 py-4">
                     <div class="text-[14px]">Capture screenshot</div>
@@ -460,12 +484,149 @@
                   Routing is auto-detected once it's installed.
                 </p>
               </div>
+              <div class="panel-soft p-5">
+                <div class="flex items-baseline gap-3">
+                  <span class="mono text-[11px] text-brand">×</span>
+                  <div class="text-[14px] font-medium">Uninstall</div>
+                </div>
+                <p class="mt-1.5 ml-8 text-[13.5px] text-muted">
+                  Drag <span class="mono text-[12px] text-text">Oliver.app</span> from Applications to the Trash,
+                  then remove the local data folder:
+                </p>
+                <pre class="mt-2 ml-8 overflow-x-auto rounded bg-white/[0.04] px-3 py-2 mono text-[12px] text-text/90">rm -rf ~/Library/Application\ Support/com.anuraghragidimilli.oliver</pre>
+                <p class="mt-2 ml-8 text-[13.5px] text-muted">
+                  That's everything — no daemons, no launch agents, no auto-updaters.
+                </p>
+              </div>
             </div>
           </div>
 
           <div class="reveal mt-12 flex flex-wrap items-center gap-3">
             <a class="btn-primary" href="https://github.com/Anuragh33/oliver-site/releases/latest">Download for macOS</a>
             <span class="text-[12px] text-muted">macOS 13+ · Apple Silicon</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Changelog (latest release, fetched from GitHub at runtime) -->
+      <section id="changelog" class="border-t border-white/[0.06]">
+        <div class="mx-auto max-w-6xl px-6 py-24">
+          <div class="reveal grid grid-cols-1 gap-12 md:grid-cols-12">
+            <div class="md:col-span-5">
+              <div class="text-[11px] uppercase tracking-[0.16em] text-brand">Changelog</div>
+              <h2 class="mt-3 text-[34px] font-medium tracking-tight">What's in the latest release.</h2>
+              <p class="mt-4 text-muted">
+                Pulled live from GitHub. The full history lives on the
+                <a class="text-text underline decoration-white/[0.20] underline-offset-4 hover:decoration-white/[0.45]" href="https://github.com/Anuragh33/oliver-site/releases">releases page</a>.
+              </p>
+            </div>
+            <div class="md:col-span-7">
+              <article id="latest-release" class="panel p-6">
+                <header class="flex flex-wrap items-baseline justify-between gap-2 border-b border-white/[0.06] pb-4">
+                  <div class="flex items-baseline gap-3">
+                    <span class="text-[18px] font-medium tracking-tight" data-release-tag>latest</span>
+                    <span class="text-[11px] uppercase tracking-[0.16em] text-muted" data-release-date></span>
+                  </div>
+                  <a class="text-[12px] text-muted hover:text-text mono" href="https://github.com/Anuragh33/oliver-site/releases/latest" data-release-link>view on github →</a>
+                </header>
+                <pre class="mt-4 whitespace-pre-wrap font-sans text-[13.5px] leading-relaxed text-text/85" data-release-body>Loading release notes…</pre>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="border-t border-white/[0.06]">
+        <div class="mx-auto max-w-6xl px-6 py-24">
+          <div class="reveal max-w-2xl">
+            <div class="text-[11px] uppercase tracking-[0.16em] text-brand">FAQ</div>
+            <h2 class="mt-3 text-[34px] font-medium tracking-tight">Common questions.</h2>
+          </div>
+
+          <div class="reveal mt-12 grid grid-cols-1 gap-3">
+            <details class="panel-soft p-5 group">
+              <summary class="flex cursor-pointer list-none items-center justify-between text-[14.5px] font-medium">
+                Does Oliver work on Intel Macs?
+                <span class="text-muted transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="mt-3 text-[13.5px] leading-relaxed text-muted">
+                No. Oliver ships an Apple Silicon (aarch64) binary only. The audio capture sidecar and
+                Whisper acceleration both require an M-series chip.
+              </p>
+            </details>
+
+            <details class="panel-soft p-5 group">
+              <summary class="flex cursor-pointer list-none items-center justify-between text-[14.5px] font-medium">
+                Do I need an API key?
+                <span class="text-muted transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="mt-3 text-[13.5px] leading-relaxed text-muted">
+                Yes — at least one. Oliver doesn't proxy or sponsor model calls. Bring a key from OpenAI,
+                Anthropic, Gemini, Groq, or OpenRouter, or run Ollama locally for a fully offline setup.
+              </p>
+            </details>
+
+            <details class="panel-soft p-5 group">
+              <summary class="flex cursor-pointer list-none items-center justify-between text-[14.5px] font-medium">
+                How much does Oliver cost?
+                <span class="text-muted transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="mt-3 text-[13.5px] leading-relaxed text-muted">
+                The app is free. You pay only your model provider — usage rolls up under whichever key you
+                configured. With Ollama you pay nothing.
+              </p>
+            </details>
+
+            <details class="panel-soft p-5 group">
+              <summary class="flex cursor-pointer list-none items-center justify-between text-[14.5px] font-medium">
+                Why is the app unsigned? Is it safe?
+                <span class="text-muted transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="mt-3 text-[13.5px] leading-relaxed text-muted">
+                The current release ships without an Apple Developer ID signature, so macOS Gatekeeper
+                flags it on first launch. CI builds are reproducible from the upstream repo; signing is on
+                the roadmap. To bypass Gatekeeper on Sequoia, clear the quarantine flag:
+                <code class="rounded bg-white/[0.05] px-1.5 py-0.5 text-[11px]">xattr -dr com.apple.quarantine /Applications/Oliver.app</code>.
+              </p>
+            </details>
+
+            <details class="panel-soft p-5 group">
+              <summary class="flex cursor-pointer list-none items-center justify-between text-[14.5px] font-medium">
+                Does it really not appear in screen recordings?
+                <span class="text-muted transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="mt-3 text-[13.5px] leading-relaxed text-muted">
+                Yes. The overlay window sets
+                <code class="rounded bg-white/[0.05] px-1.5 py-0.5 text-[11px]">NSWindowSharingType = NSWindowSharingNone</code>
+                at the AppKit layer. Zoom, Teams, Google Meet, QuickTime, OBS, and every screen recorder
+                tested see a clean desktop.
+              </p>
+            </details>
+
+            <details class="panel-soft p-5 group">
+              <summary class="flex cursor-pointer list-none items-center justify-between text-[14.5px] font-medium">
+                How do I capture the other side of the call?
+                <span class="text-muted transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="mt-3 text-[13.5px] leading-relaxed text-muted">
+                Install BlackHole 2ch from the dashboard's AI Models page (one click). macOS routes the
+                call's audio through BlackHole into Oliver while your speakers still play normally.
+              </p>
+            </details>
+
+            <details class="panel-soft p-5 group">
+              <summary class="flex cursor-pointer list-none items-center justify-between text-[14.5px] font-medium">
+                Where are my conversations stored?
+                <span class="text-muted transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="mt-3 text-[13.5px] leading-relaxed text-muted">
+                In a local SQLite database under
+                <code class="rounded bg-white/[0.05] px-1.5 py-0.5 text-[11px]">~/Library/Application Support/com.anuraghragidimilli.oliver</code>.
+                API keys are AES-GCM-SIV encrypted before they touch disk. Delete the folder to wipe
+                everything.
+              </p>
+            </details>
           </div>
         </div>
       </section>
@@ -492,7 +653,8 @@
         </div>
         <div class="flex items-center gap-6">
           <a class="hover:text-text" href="https://github.com/Anuragh33/oliver-site/releases">Releases</a>
-          <a class="hover:text-text" href="https://github.com/Anuragh33/oliver-site/releases">Changelog</a>
+          <a class="hover:text-text" href="#changelog">Changelog</a>
+          <a class="hover:text-text" href="#faq">FAQ</a>
           <a class="hover:text-text" href="https://github.com/Anuragh33/oliver-site/issues">Issues</a>
         </div>
       </div>
@@ -512,6 +674,44 @@
         { rootMargin: "0px 0px -10% 0px", threshold: 0.05 }
       );
       document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      // Pull the latest release from GitHub so the hero version pill and the
+      // Changelog section stay in sync without manual bumps. Fails silently
+      // when offline or rate-limited; the static fallback text remains.
+      (async () => {
+        try {
+          const r = await fetch(
+            "https://api.github.com/repos/Anuragh33/oliver-site/releases/latest",
+            { headers: { Accept: "application/vnd.github+json" } }
+          );
+          if (!r.ok) return;
+          const release = await r.json();
+          const tag = release.tag_name || "";
+          document.querySelectorAll("[data-version]").forEach((el) => {
+            el.textContent = tag;
+          });
+          const wrapper = document.getElementById("latest-release");
+          if (!wrapper) return;
+          const tagEl = wrapper.querySelector("[data-release-tag]");
+          const dateEl = wrapper.querySelector("[data-release-date]");
+          const bodyEl = wrapper.querySelector("[data-release-body]");
+          const linkEl = wrapper.querySelector("[data-release-link]");
+          if (tagEl) tagEl.textContent = tag;
+          if (dateEl && release.published_at) {
+            dateEl.textContent = new Date(release.published_at).toLocaleDateString(
+              "en-US",
+              { month: "short", day: "numeric", year: "numeric" }
+            );
+          }
+          if (bodyEl) {
+            const body = (release.body || "").trim();
+            bodyEl.textContent = body || "Release notes coming soon.";
+          }
+          if (linkEl && release.html_url) linkEl.href = release.html_url;
+        } catch (_) {
+          // Offline or rate-limited; leave the static fallback text in place.
+        }
+      })();
     </script>
   </body>
 </html>

@@ -1,0 +1,32 @@
+name: Link check
+
+on:
+  pull_request:
+    paths:
+      - "**/*.md"
+      - "**/*.html"
+      - ".github/workflows/link-check.yml"
+  schedule:
+    # Weekly Mondays 09:00 UTC — catches links that rot upstream
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --max-concurrency 4
+            --accept 200,206,429
+            --exclude-path node_modules
+            --exclude '^https://github.com/Anuragh33/oliver-site/releases/download/'
+            ./README.md ./index.html
+          fail: true
