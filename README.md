@@ -161,7 +161,7 @@ Oliver is built to be impossible to observe from the outside — including by us
 
 **1 — Download**
 
-Grab the latest `Oliver_0.1.1_aarch64.dmg` from [**Releases**](https://github.com/Anuragh33/oliver-site/releases/latest). Open the DMG and drag Oliver into Applications.
+Grab the latest `Oliver_0.1.2_aarch64.dmg` from [**Releases**](https://github.com/Anuragh33/oliver-site/releases/latest). Open the DMG and drag Oliver into Applications.
 
 > **First launch:** the build is unsigned, so Gatekeeper will block it.
 >
